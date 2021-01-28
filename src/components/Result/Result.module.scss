@@ -1,0 +1,30 @@
+.container {
+  max-width: 70rem;
+  width: 100%;
+
+  .iconContainer {
+    text-align: center;
+    margin-bottom: 10rem;
+  }
+
+  .incorrectIconContainer {
+    margin-bottom: 3rem;
+  }
+
+  .icon {
+    margin-bottom: 2rem;
+  }
+
+  .cancelIcon {
+    color: red;
+  }
+
+  .checkIcon {
+    color: green;
+  }
+
+  .incorrectCount {
+    color: red;
+  }
+}
+

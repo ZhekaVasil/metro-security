@@ -1,0 +1,17 @@
+.container {
+
+  max-width: 70rem;
+  width: 100%;
+
+  .question {
+    margin-bottom: 2rem;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    align-items: flex-end;
+  }
+}
+

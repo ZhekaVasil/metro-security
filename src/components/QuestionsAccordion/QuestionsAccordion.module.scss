@@ -1,0 +1,15 @@
+.container {
+  text-align: left;
+
+  .contentTitle {
+    margin-bottom: .1rem;
+  }
+
+  .currentAnswer {
+    color: red;
+  }
+
+  .correctAnswer {
+    color: green;
+  }
+}
