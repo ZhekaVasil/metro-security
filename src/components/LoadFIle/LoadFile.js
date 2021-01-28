@@ -4,6 +4,7 @@ import { Button, Header } from 'semantic-ui-react';
 import Papa from 'papaparse';
 import { generateHash } from '../../utils';
 import { Container } from '../Container';
+import { shuffle } from '../../utils';
 
 export const LoadFile = ({ setQuestions, setPageType }) => {
   const inputRef = useRef();
@@ -17,12 +18,12 @@ export const LoadFile = ({ setQuestions, setPageType }) => {
           return {
             id: index + 1,
             question: item.question,
-            answers: Object.entries(item).reduce((prev, curr) => {
+            answers: shuffle(Object.entries(item).reduce((prev, curr) => {
               if (curr[0] && curr[0] !== 'question' && curr[1]) {
                 return prev.concat({ id: generateHash(curr[1].toString()), answer:curr[1], isCorrect: Number(curr[0]) === 1 })
               }
               return prev;
-            }, [])
+            }, []))
           }
         }).filter(item => item.question)
         setQuestions(parsedResult);
