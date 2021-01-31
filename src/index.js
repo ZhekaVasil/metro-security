@@ -4,10 +4,6 @@ import { App } from './App';
 import 'semantic-ui-css/semantic.min.css';
 import './index.scss';
 
-window.onbeforeunload = function() {
-  return 'Закрыть тест?';
-}
-
 ReactDOM.render(
   <React.StrictMode>
     <App />
