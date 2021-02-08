@@ -7,8 +7,9 @@ import { QuestionsAccordion } from '../QuestionsAccordion';
 
 export const Result = ({ questions }) => {
   const incorrectAnswersCount = questions.reduce((prev, curr) => {
-    const correctAnswer = curr.answers.find(({ isCorrect }) => isCorrect);
-    if (curr.answeredId !== correctAnswer.id) {
+    const correctAnswers = curr.answers.filter(({ isCorrect }) => isCorrect);
+    const hasIncorrectAnswer = correctAnswers.some(({ id: correctAnswerId }) => !curr.answeredIds.includes(correctAnswerId))
+    if (correctAnswers.length !== curr.answeredIds.length || hasIncorrectAnswer) {
       return prev + 1;
     }
     return prev;
@@ -24,7 +25,7 @@ export const Result = ({ questions }) => {
               Количество неправельных ответов: <span className={classes.incorrectCount}>{incorrectAnswersCount}</span>
             </Header>
           </div>
-          <QuestionsAccordion questions={questions} />
+          {<QuestionsAccordion questions={questions} />}
         </>
       ) : (
         <div className={classes.iconContainer}>

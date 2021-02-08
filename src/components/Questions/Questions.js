@@ -8,7 +8,7 @@ export const Questions = ({ setPageType, questions, setQuestions }) => {
   const [currentQuestionId, setCurrentQuestionId] = useState(questions[0].id);
   const isLastQuestion = currentQuestionId === [...questions].reverse()[0].id;
   const isFirstQuestion = currentQuestionId === questions[0].id;
-  const isAnswered = questions.find(({ id }) => id === currentQuestionId).answeredId;
+  const isAnswered = questions.find(({ id }) => id === currentQuestionId).answeredIds.length;
 
   const goBack = useCallback(() => {
     const index = questions.findIndex(({ id }) => id === currentQuestionId);

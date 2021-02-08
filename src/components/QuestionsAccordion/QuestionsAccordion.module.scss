@@ -5,11 +5,15 @@
     margin-bottom: .1rem;
   }
 
-  .currentAnswer {
-    color: red;
+  .incorrectAnswer {
+    label {
+      color: red!important;
+    }
   }
 
   .correctAnswer {
-    color: green;
+    label {
+      color: green!important;
+    }
   }
 }

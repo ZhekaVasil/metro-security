@@ -1,16 +1,19 @@
 import React, { useCallback } from 'react';
 import cx from 'classnames';
 import classes from './Question.module.scss';
-import { Header, Form, Radio } from 'semantic-ui-react';
+import { Header, Form, Checkbox } from 'semantic-ui-react';
 
 export const Question = ({ questionId, setQuestions, questions, className }) => {
-  const { question, answers, answeredId } = questions.find(({ id }) => id === questionId)
-
-  const handleRadioChange = useCallback((event, { value }) => {
+  const { question, answers, answeredIds } = questions.find(({ id }) => id === questionId)
+  const handleCheckboxChange = useCallback((event, { value, checked }) => {
     const updatedQuestions = questions.map(item => {
       const updatedQuestion = {...item};
       if (item.id === questionId) {
-        updatedQuestion.answeredId = value
+        if (checked) {
+          updatedQuestion.answeredIds = [...new Set([...updatedQuestion.answeredIds, value])]
+        } else {
+          updatedQuestion.answeredIds = updatedQuestion.answeredIds.filter(i => i !== value)
+        }
       }
       return updatedQuestion;
     });
@@ -24,7 +27,7 @@ export const Question = ({ questionId, setQuestions, questions, className }) => 
       <Form>
         {answers.map(({ id, answer }) => (
           <Form.Field key={id}>
-            <Radio label={answer} name="radioGroup" value={id} checked={id === answeredId} onChange={handleRadioChange} />
+            <Checkbox label={answer} name="radioGroup" value={id} checked={answeredIds.includes(id)} onChange={handleCheckboxChange} />
           </Form.Field>
         ))}
       </Form>

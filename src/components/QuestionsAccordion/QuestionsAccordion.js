@@ -1,17 +1,17 @@
 import React, { useState, useCallback } from 'react';
+import cx from 'classnames';
 import classes from './QuestionsAccordion.module.scss'
-import { Accordion, Icon } from 'semantic-ui-react';
+import {Accordion, Checkbox, Form, Icon} from 'semantic-ui-react';
 
 export const QuestionsAccordion = ({ questions }) => {
   const [activeIndex, setActiveIndex] = useState(-1);
   const incorrectAnswers = questions.reduce((prev, curr) => {
-    const correctAnswer = curr.answers.find(({ isCorrect }) => isCorrect);
-    const currentAnswer = curr.answers.find(({ id }) => id === curr.answeredId);
-    if (curr.answeredId !== correctAnswer.id) {
+    const correctAnswers = curr.answers.filter(({ isCorrect }) => isCorrect);
+    const hasIncorrectAnswer = correctAnswers.some(({ id: correctAnswerId }) => !curr.answeredIds.includes(correctAnswerId));
+    if (correctAnswers.length !== curr.answeredIds.length || hasIncorrectAnswer) {
       return [...prev, {
         question: curr.question,
-        currentAnswer: currentAnswer.answer,
-        correctAnswer: correctAnswer.answer,
+        answers: curr.answers.map(answer => ({...answer, checked: curr.answeredIds.includes(answer.id)})),
       }];
     }
     return prev;
@@ -26,7 +26,7 @@ export const QuestionsAccordion = ({ questions }) => {
   return (
     <div className={classes.container}>
       <Accordion fluid styled>
-        {incorrectAnswers.map(({ question, currentAnswer, correctAnswer }, index) => (
+        {incorrectAnswers.map(({ question, answers }, index) => (
           <React.Fragment key={index}>
             <Accordion.Title
               active={activeIndex === index}
@@ -37,14 +37,16 @@ export const QuestionsAccordion = ({ questions }) => {
               {question}
             </Accordion.Title>
             <Accordion.Content active={activeIndex === index}>
-              <div className={classes.contentTitle}>Ваш ответ:</div>
-              <p>
-                <span className={classes.currentAnswer}>{currentAnswer}</span>
-              </p>
-              <div className={classes.contentTitle}>Правильный ответ:</div>
-              <p>
-                <span className={classes.correctAnswer}>{correctAnswer}</span>
-              </p>
+              <Form>
+                {answers.map(({ id, answer, checked, isCorrect }) => (
+                  <Form.Field key={id}>
+                    <Checkbox label={answer} name="radioGroup" checked={checked} readOnly className={cx({
+                      [classes.correctAnswer]: isCorrect,
+                      [classes.incorrectAnswer]: !isCorrect
+                    })} />
+                  </Form.Field>
+                ))}
+              </Form>
             </Accordion.Content>
           </React.Fragment>
         ))}

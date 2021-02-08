@@ -18,9 +18,10 @@ export const LoadFile = ({ setQuestions, setPageType }) => {
           return {
             id: index + 1,
             question: item.question,
+            answeredIds: [],
             answers: shuffle(Object.entries(item).reduce((prev, curr) => {
               if (curr[0] && curr[0] !== 'question' && curr[1]) {
-                return prev.concat({ id: generateHash(curr[1].toString()), answer:curr[1], isCorrect: Number(curr[0]) === 1 })
+                return prev.concat({ id: generateHash(curr[1].toString()), answer:curr[1], isCorrect: curr[0].includes('TRUE') })
               }
               return prev;
             }, []))
