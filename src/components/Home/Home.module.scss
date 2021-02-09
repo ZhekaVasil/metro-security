@@ -1,0 +1,13 @@
+.container {
+
+  .innerContainer {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    text-align: center;
+  }
+
+  .adminButton {
+    margin-bottom: 1rem!important;
+  }
+}

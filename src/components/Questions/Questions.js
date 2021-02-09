@@ -4,7 +4,7 @@ import { Button, Icon } from 'semantic-ui-react';
 import { Question } from '../Question';
 import { Container } from '../Container';
 
-export const Questions = ({ setPageType, questions, setQuestions }) => {
+export const Questions = ({ setPageType, questions, setQuestions, userForTesting }) => {
   const [currentQuestionId, setCurrentQuestionId] = useState(questions[0].id);
   const isLastQuestion = currentQuestionId === [...questions].reverse()[0].id;
   const isFirstQuestion = currentQuestionId === questions[0].id;
@@ -25,25 +25,28 @@ export const Questions = ({ setPageType, questions, setQuestions }) => {
     }
   }, [isLastQuestion, setPageType, currentQuestionId, setCurrentQuestionId, questions]);
   return (
-    <Container className={classes.container}>
-      <Question questionId={currentQuestionId} setQuestions={setQuestions} questions={questions} className={classes.question} />
-      <div className={classes.buttons}>
-        <div>
-          {!isFirstQuestion && (
-            <Button icon labelPosition='left' disabled={currentQuestionId === questions[0].id} onClick={goBack}>
-              <Icon name="left arrow" />
-              Предыдущий вопрос
+    <div className={classes.container}>
+      <h3 className={classes.head}>Работник: {userForTesting}</h3>
+      <Container className={classes.containerInner}>
+        <Question questionId={currentQuestionId} setQuestions={setQuestions} questions={questions} className={classes.question} />
+        <div className={classes.buttons}>
+          <div>
+            {!isFirstQuestion && (
+              <Button icon labelPosition='left' disabled={currentQuestionId === questions[0].id} onClick={goBack}>
+                <Icon name="left arrow" />
+                Предыдущий вопрос
+              </Button>
+            )}
+          </div>
+          <div>
+            <Button icon labelPosition='right' onClick={goNext} disabled={!isAnswered}>
+              {isLastQuestion ? 'Результат' : 'Следующий вопрос'}
+              <Icon name="right arrow" />
             </Button>
-          )}
+          </div>
         </div>
-        <div>
-          <Button icon labelPosition='right' onClick={goNext} disabled={!isAnswered}>
-            {isLastQuestion ? 'Результат' : 'Следующий вопрос'}
-            <Icon name="right arrow" />
-          </Button>
-        </div>
-      </div>
-    </Container>
+      </Container>
+    </div>
   )
 };
 

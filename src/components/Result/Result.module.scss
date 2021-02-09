@@ -1,6 +1,17 @@
 .container {
-  max-width: 70rem;
+
+  display: flex;
+  flex-direction: column;
   width: 100%;
+
+  .head {
+    margin: 1rem auto;
+  }
+
+  .containerInner {
+    max-width: 70rem;
+    width: 100%;
+  }
 
   .iconContainer {
     text-align: center;

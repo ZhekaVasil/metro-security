@@ -28,7 +28,7 @@ export const LoadFile = ({ setQuestions, setPageType }) => {
           }
         }).filter(item => item.question)
         setQuestions(parsedResult);
-        setPageType('questions');
+        setPageType('user-selection-for-testing');
       }
     })
   }, [setQuestions, setPageType])
