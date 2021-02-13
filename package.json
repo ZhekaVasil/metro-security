@@ -11,7 +11,11 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "classnames": "^2.2.6",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "electron-squirrel-startup": "^1.0.0",
+    "express": "~4.16.0",
     "node-sass": "4.14.1",
     "papaparse": "^5.3.0",
     "react": "^17.0.1",
@@ -21,7 +25,8 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
     "use-http": "^1.0.16",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "xlsx": "^0.16.9"
   },
   "scripts": {
     "start": "electron-forge start",
@@ -31,7 +36,9 @@
     "eject": "react-scripts eject",
     "pack": "electron .",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "start-server": "node ./server.js",
+    "start-server-dev": "nodemon ./server.js"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "nodemon": "^1.19.4",
     "@electron-forge/cli": "^6.0.0-beta.54",
     "@electron-forge/maker-deb": "^6.0.0-beta.54",
     "@electron-forge/maker-rpm": "^6.0.0-beta.54",

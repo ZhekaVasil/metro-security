@@ -1,45 +1,59 @@
-import React, { useRef, useCallback } from 'react';
+import React, {useCallback, useState} from 'react';
+import useFetch from 'use-http';
 import classes from './LoadFile.module.scss';
-import { Button, Header } from 'semantic-ui-react';
-import Papa from 'papaparse';
-import { generateHash } from '../../utils';
-import { Container } from '../Container';
-import { shuffle } from '../../utils';
+import {shuffle} from '../../utils';
+import {getApiUrl} from '../../utils/apiUtils';
+import {Form, Checkbox, Input, Button} from 'semantic-ui-react';
 
-export const LoadFile = ({ setQuestions, setPageType }) => {
-  const inputRef = useRef();
-  const handleFileSelect = useCallback((event) => {
-    const file = event.target.files[0];
-    Papa.parse(file, {
-      header: true,
-      dynamicTyping: true,
-      complete: results => {
-        const parsedResult = results.data.map((item, index) => {
-          return {
-            id: index + 1,
-            question: item.question,
-            answeredIds: [],
-            answers: shuffle(Object.entries(item).reduce((prev, curr) => {
-              if (curr[0] && curr[0] !== 'question' && curr[1]) {
-                return prev.concat({ id: generateHash(curr[1].toString()), answer:curr[1], isCorrect: curr[0].includes('TRUE') })
-              }
-              return prev;
-            }, []))
-          }
-        }).filter(item => item.question)
-        setQuestions(parsedResult);
-        setPageType('user-selection-for-testing');
-      }
-    })
-  }, [setQuestions, setPageType])
+export const LoadFile = ({setQuestions, setPageType}) => {
+  const {loading, error, data: sheets} = useFetch(getApiUrl('questions'), {}, []);
+  const [questionsAmount, setQuestionsAmount] = useState(10);
+  const [selectedSheets, setSelectedSheets] = useState([]);
+
+  const handleCheckboxChange = useCallback((event, { value, checked }) => {
+    if (checked) {
+      setSelectedSheets([...selectedSheets, value]);
+    } else {
+      setSelectedSheets(selectedSheets.filter(i => i !== value))
+    }
+  }, [setSelectedSheets, selectedSheets]);
+
+  const handleQuestionsAmount = useCallback((event, { value }) => {
+    setQuestionsAmount(Number(value));
+  }, [setQuestionsAmount])
+
+  const goNext = useCallback(() => {
+    const questions = shuffle(sheets.data
+      .filter(i => selectedSheets.includes(i.id))
+      .reduce((prev, curr) => {
+        const questions = curr.questions.map(i => ({...i, answeredIds: []}));
+        return ([...prev, ...questions]);
+      }, []))
+      .slice(0, questionsAmount)
+    setQuestions(questions);
+    setPageType('user-selection-for-testing');
+  }, [setQuestions, setPageType, selectedSheets, sheets, questionsAmount])
+
+  const maxQuestionsAmount = selectedSheets.reduce((prev, curr) => prev + sheets.data.find(i => i.id === curr).questions.length, 0)
   return (
-    <Container className={classes.container}>
-      <div className={classes.innerContainer}>
-        <Header as="h3">Загрузите вопросы</Header>
-        <input type="file" ref={inputRef} className={classes.fileInput} onChange={handleFileSelect} />
-        <Button primary onClick={() => inputRef.current.click()}>Загрузить</Button>
-      </div>
-    </Container>
+    <div className={classes.container}>
+      {error && 'Упс... Произошла ошибка. Невозможно загрузить список вопросов'}
+      {loading && 'Загрузка...'}
+      {sheets && (
+        <>
+          <h1>Выбеоите категории вопросов</h1>
+          {sheets.data.map(sheet => (
+            <Form.Field key={sheet.sheetName}>
+              <Checkbox label={sheet.sheetName} name="sheet" checked={selectedSheets.includes(sheet.id)} value={sheet.id} onChange={handleCheckboxChange}/>
+            </Form.Field>
+          ))}
+          <Input placeholder='Количество задаваемых вопросов' min={0} max={maxQuestionsAmount} value={maxQuestionsAmount < questionsAmount ? maxQuestionsAmount : questionsAmount} onChange={handleQuestionsAmount} type="number" />
+          <br />
+          <Button primary size="big" onClick={() => setPageType('home')}>Назад</Button>
+          <Button primary size="big" onClick={goNext} disabled={!maxQuestionsAmount || !questionsAmount}>Далее</Button>
+        </>
+      )}
+    </div>
   )
 };
 
