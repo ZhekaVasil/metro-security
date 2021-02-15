@@ -19,7 +19,7 @@ export const UsersInput = ({ onSuggestionSelected }) => {
   }, [users])
 
   const onSuggestionsFetchRequested = useCallback(({ value }) => {
-    if (value.length) {
+    if (value && value.length) {
       const filteredSuggestions = users.data.filter(user => user.fullName.toLowerCase().includes(value.trim().toLowerCase()));
       setSuggestions(filteredSuggestions);
     }
@@ -31,7 +31,13 @@ export const UsersInput = ({ onSuggestionSelected }) => {
 
   const getSuggestionValue = useCallback(suggestion => suggestion, []);
 
-  const onChange = useCallback((event, { newValue }) => setValue(newValue), []);
+  const onChange = useCallback((event, { newValue }) => {
+    if (newValue.fullName) {
+      setValue(newValue.fullName)
+    } else {
+      setValue(newValue)
+    }
+  }, []);
 
   const renderInputComponent = useCallback(inputProps => <Input {...inputProps} />, []);
 
@@ -44,7 +50,7 @@ export const UsersInput = ({ onSuggestionSelected }) => {
     <div className={classes.container}>
       {error && 'Упс... Произошла ошибка. Невозможно загрузить список работников'}
       {loading && 'Загрузка...'}
-      {users && (
+      {!error && !loading && users && (
         <Autosuggest
           suggestions={suggestions}
           onSuggestionsFetchRequested={onSuggestionsFetchRequested}
