@@ -29,7 +29,7 @@ export const UsersInput = ({ onSuggestionSelected }) => {
     setSuggestions([]);
   }, [])
 
-  const getSuggestionValue = useCallback(suggestion => suggestion.fullName, []);
+  const getSuggestionValue = useCallback(suggestion => suggestion, []);
 
   const onChange = useCallback((event, { newValue }) => setValue(newValue), []);
 
