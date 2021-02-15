@@ -25,4 +25,23 @@ exports.saveAnswer = [
 			return apiResponse.ErrorResponse(res, err);
 		}
 	}
+];
+
+exports.getUserAnswers = [
+	function (req, res) {
+		try {
+			let answers = [];
+			if (fs.existsSync(ANSWERS_PATH)) {
+				const userId = req.params.userId;
+				const answersRaw = fs.readFileSync(ANSWERS_PATH).toString();
+				const answersParsed = JSON.parse(answersRaw);
+				answers = answersParsed.filter(answer => answer.userId === userId);
+			}
+			return apiResponse.successResponseWithData(res, 'Operation success', answers)
+		} catch (err) {
+			console.log(err);
+			//throw error in json response with status 500.
+			return apiResponse.ErrorResponse(res, err);
+		}
+	}
 ]
