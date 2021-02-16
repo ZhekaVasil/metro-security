@@ -4,10 +4,6 @@
   flex-direction: column;
   width: 100%;
 
-  .head {
-    margin: 1rem auto;
-  }
-
   .containerInner {
     max-width: 70rem;
     width: 100%;
@@ -36,6 +32,11 @@
 
   .incorrectCount {
     color: red;
+  }
+
+  .button {
+    margin-top: 2rem;
+    max-width: 100px;
   }
 }
 

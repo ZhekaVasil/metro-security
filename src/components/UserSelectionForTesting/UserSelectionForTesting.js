@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import classes from './UserSelectionForTesting.module.scss';
 import { Container } from '../Container';
 import { UsersInput } from '../UsersInput';
-import {Form} from 'semantic-ui-react';
+import {Button, Form} from 'semantic-ui-react';
 
 export const UserSelectionForTesting = ({ setPageType, setUserForTesting }) => {
   const onSuggestionSelected = useCallback((event, { suggestionValue }) => {
@@ -18,6 +18,7 @@ export const UserSelectionForTesting = ({ setPageType, setUserForTesting }) => {
             <UsersInput onSuggestionSelected={onSuggestionSelected}/>
           </Form.Field>
         </Form>
+        <Button className={classes.button} primary size="medium" onClick={() => setPageType('home')}>Назад</Button>
       </div>
     </Container>
   )

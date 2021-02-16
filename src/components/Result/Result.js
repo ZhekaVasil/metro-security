@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import cx from 'classnames';
 import classes from './Result.module.scss'
 import { Container } from '../Container';
-import { Icon, Header } from 'semantic-ui-react';
+import {Icon, Header, Button} from 'semantic-ui-react';
 import { QuestionsAccordion } from '../QuestionsAccordion';
 import useFetch from 'use-http';
 import {getApiUrl} from '../../utils/apiUtils';
+import { UserInfoHeading } from '../UserInfoHeading';
 
-export const Result = ({ questions, userForTesting }) => {
+export const Result = ({ questions, userForTesting, setPageType }) => {
   const {post, response, loading, error} = useFetch(getApiUrl('answers'));
 
   const incorrectAnswersCount = questions.reduce((prev, curr) => {
@@ -40,7 +41,7 @@ export const Result = ({ questions, userForTesting }) => {
 
   return (
     <div className={classes.container}>
-      <h3 className={classes.head}>Работник: {userForTesting.fullName}</h3>
+      <UserInfoHeading user={userForTesting} />
       <Container className={classes.containerInner}>
         {incorrectAnswersCount ? (
           <>
@@ -58,6 +59,7 @@ export const Result = ({ questions, userForTesting }) => {
             <Header as="h3" className={classes.description}>Все вопросы отвечены правильно</Header>
           </div>
         )}
+        <Button className={classes.button} primary size="medium" onClick={() => setPageType('home')}>Назад</Button>
       </Container>
     </div>
   )

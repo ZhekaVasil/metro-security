@@ -43,14 +43,21 @@ export const LoadFile = ({setQuestions, setPageType}) => {
         <>
           <h1>Выбеоите категории вопросов</h1>
           {sheets.data.map(sheet => (
-            <Form.Field key={sheet.sheetName}>
+            <Form.Field key={sheet.sheetName} className={classes.checkBox}>
               <Checkbox label={sheet.sheetName} name="sheet" checked={selectedSheets.includes(sheet.id)} value={sheet.id} onChange={handleCheckboxChange}/>
             </Form.Field>
           ))}
-          <Input placeholder='Количество задаваемых вопросов' min={0} max={maxQuestionsAmount} value={maxQuestionsAmount < questionsAmount ? maxQuestionsAmount : questionsAmount} onChange={handleQuestionsAmount} type="number" />
+          <Form className={classes.amountForm}>
+            <Form.Field>
+              <label>Количество вопросов:</label>
+              <Input className={classes.amountInput} placeholder='Количество задаваемых вопросов' min={0} max={maxQuestionsAmount} value={maxQuestionsAmount < questionsAmount ? maxQuestionsAmount : questionsAmount} onChange={handleQuestionsAmount} type="number" />
+            </Form.Field>
+          </Form>
           <br />
-          <Button primary size="big" onClick={() => setPageType('home')}>Назад</Button>
-          <Button primary size="big" onClick={goNext} disabled={!maxQuestionsAmount || !questionsAmount}>Далее</Button>
+          <div className={classes.buttons}>
+            <Button className={classes.backButton} primary size="medium" onClick={() => setPageType('home')}>Назад</Button>
+            <Button primary size="medium" onClick={goNext} disabled={!maxQuestionsAmount || !questionsAmount}>Далее</Button>
+          </div>
         </>
       )}
     </div>

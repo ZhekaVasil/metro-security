@@ -45,7 +45,7 @@ export const App = () => {
     }
 
     case 'result': {
-      page = <Result questions={questions} userForTesting={userForTesting} />;
+      page = <Result questions={questions} userForTesting={userForTesting} setPageType={setPageType} />;
       break;
     }
 

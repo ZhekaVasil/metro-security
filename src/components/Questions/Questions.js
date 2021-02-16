@@ -3,6 +3,7 @@ import classes from './Questions.module.scss';
 import { Button, Icon } from 'semantic-ui-react';
 import { Question } from '../Question';
 import { Container } from '../Container';
+import { UserInfoHeading } from '../UserInfoHeading';
 
 export const Questions = ({ setPageType, questions, setQuestions, userForTesting }) => {
   const [currentQuestionId, setCurrentQuestionId] = useState(questions[0].id);
@@ -26,7 +27,7 @@ export const Questions = ({ setPageType, questions, setQuestions, userForTesting
   }, [isLastQuestion, setPageType, currentQuestionId, setCurrentQuestionId, questions]);
   return (
     <div className={classes.container}>
-      <h3 className={classes.head}>Работник: {userForTesting.fullName}</h3>
+      <UserInfoHeading  user={userForTesting}/>
       <Container className={classes.containerInner}>
         <Question questionId={currentQuestionId} setQuestions={setQuestions} questions={questions} className={classes.question} />
         <div className={classes.buttons}>
