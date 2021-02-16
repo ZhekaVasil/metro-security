@@ -8,7 +8,7 @@ import { SuggestionsContainer } from './components/SuggestionsContainer';
 import { SuggestionsItem } from './components/SuggestionsItem';
 
 export const UsersInput = ({ onSuggestionSelected }) => {
-  const { loading, error, data: users } = useFetch(getApiUrl('users'), {}, []);
+  const { loading, error, data: users } = useFetch(getApiUrl('users'), {cachePolicy: 'no-cache'}, []);
   const [suggestions, setSuggestions] = useState([]);
   const [value, setValue] = useState('');
 

@@ -6,7 +6,7 @@ import {getApiUrl} from '../../utils/apiUtils';
 import {Form, Checkbox, Input, Button} from 'semantic-ui-react';
 
 export const LoadFile = ({setQuestions, setPageType}) => {
-  const {loading, error, data: sheets} = useFetch(getApiUrl('questions'), {}, []);
+  const {loading, error, data: sheets} = useFetch(getApiUrl('questions'), {cachePolicy: 'no-cache'}, []);
   const [questionsAmount, setQuestionsAmount] = useState(10);
   const [selectedSheets, setSelectedSheets] = useState([]);
 

@@ -8,7 +8,7 @@ import { AnswerHistory } from '../AnswerHistory';
 
 
 export const Management = ({ setPageType }) => {
-  const {get, response, loading, error} = useFetch(getApiUrl('answers'));
+  const {get, response, loading, error} = useFetch(getApiUrl('answers'), {cachePolicy: 'no-cache'});
   const [selectedUser, setSelectedUser] = useState(null);
 
   const onSuggestionSelected = useCallback((event, { suggestionValue }) => {
