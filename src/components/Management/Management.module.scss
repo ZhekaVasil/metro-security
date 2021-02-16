@@ -1,0 +1,25 @@
+.container {
+  padding: 1rem;
+
+  .userContainer {
+    margin-bottom: 2rem;
+  }
+
+  .userFullName {
+    margin-bottom: 0;
+  }
+
+  .userPosition {
+    margin-top: 0;
+  }
+
+  .form {
+    max-width: 300px!important;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .answerHistory {
+    margin-bottom: 3rem;
+  }
+}

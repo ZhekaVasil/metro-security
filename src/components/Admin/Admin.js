@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import classes from './Admin.module.scss';
 import { Container } from '../Container';
 import {ADMIN_PASS} from '../../constants/common';
-import { Form } from 'semantic-ui-react';
+import {Button, Form} from 'semantic-ui-react';
 
 export const Admin = ({ setPageType }) => {
   const onChange = useCallback(event => {
@@ -20,6 +20,7 @@ export const Admin = ({ setPageType }) => {
             <input placeholder='Пароль' onChange={onChange} />
           </Form.Field>
         </Form>
+        <Button className={classes.button} primary size="medium" onClick={() => setPageType('home')}>Назад</Button>
       </div>
     </Container>
   )

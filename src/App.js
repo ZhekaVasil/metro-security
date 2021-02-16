@@ -4,7 +4,7 @@ import { LoadFile } from './components/LoadFIle';
 import { Questions } from './components/Questions';
 import { Result } from './components/Result';
 import { Home } from './components/Home';
-import { Users } from './components/Users';
+import { Management } from './components/Management';
 import { Admin } from './components/Admin/Admin';
 import { UserSelectionForTesting } from './components/UserSelectionForTesting';
 
@@ -25,7 +25,7 @@ export const App = () => {
     }
 
     case 'admin-management': {
-      page = <Users setPageType={setPageType} />;
+      page = <Management setPageType={setPageType} />;
       break;
     }
 
