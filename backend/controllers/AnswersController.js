@@ -9,7 +9,7 @@ exports.saveAnswer = [
 			if (!fs.existsSync(ANSWERS_PATH)) {
 				fs.appendFileSync(ANSWERS_PATH, '[]');
 			}
-			const answersRaw = fs.readFileSync('db/answers.json').toString();
+			const answersRaw = fs.readFileSync(ANSWERS_PATH).toString();
 			const answers = JSON.parse(answersRaw);
 			const date = new Date();
 			const answer = {
