@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
+require('./server');
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -8,8 +9,8 @@ function createWindow () {
       nodeIntegration: true
     }
   })
-
-  win.loadFile('build/index.html');
+  win.loadURL('http://localhost:3000/');
+  // win.loadFile('build/index.html');
 }
 
 app.whenReady().then(createWindow)
