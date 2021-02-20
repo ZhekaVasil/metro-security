@@ -86,7 +86,37 @@ const parseXLSX = xlsx => {
 	});
 }
 
+const parseXLSXUsers = xlsx => {
+	return Object.entries(xlsx.Sheets).map(([sheetName, sheetData]) => {
+		return Object.values(Object.entries(sheetData).reduce((prev, [cellName, cellData]) => {
+			if (cellName.includes('!')) {
+				return prev;
+			} else {
+				const userRow = Number(cellName.replace(/\D+/, ''));
+				const userColumn = cellName.replace(/\d+/, '');
+				const isName = userColumn === 'A';
+				if (userRow === 1) {
+					return prev
+				} else {
+					prev[userRow] = prev[userRow] || {};
+
+					if (isName) {
+						prev[userRow].fullName = cellData.v;
+						prev[userRow].id = generateHash(cellData.v.toString());
+					} else {
+						prev[userRow].position = cellData.v;
+					}
+
+					return prev;
+				}
+			}
+		}, {}))
+	}).flat();
+}
+
+
 exports.generateHash = generateHash;
 exports.randomNumber = randomNumber;
 exports.shuffle = shuffle;
 exports.parseXLSX = parseXLSX;
+exports.parseXLSXUsers = parseXLSXUsers;

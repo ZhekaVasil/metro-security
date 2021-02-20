@@ -1,11 +1,15 @@
+const XLSX = require('xlsx');
 const apiResponse = require("../helpers/apiResponse");
+const { parseXLSXUsers } = require('../helpers/utility');
 const fs = require('fs');
+const path = require('path');
 
 exports.usersList = [
 	function (req, res) {
 		try {
-			const users = fs.readFileSync('db/users.json');
-			return apiResponse.successResponseWithData(res, 'Operation success', JSON.parse(users))
+			const buf = fs.readFileSync(path.normalize('работники.xlsx'));
+			const wb = XLSX.read(buf, {type:'buffer'});
+			return apiResponse.successResponseWithData(res, 'Operation success', parseXLSXUsers(wb))
 		} catch (err) {
 			//throw error in json response with status 500.
 			return apiResponse.ErrorResponse(res, err);

@@ -1,7 +1,8 @@
 const fs = require('fs');
 const apiResponse = require("../helpers/apiResponse");
+const path = require('path');
 
-const ANSWERS_PATH = 'db/answers.json';
+const ANSWERS_PATH = path.normalize('db/answers.json');
 
 exports.saveAnswer = [
 	function (req, res) {

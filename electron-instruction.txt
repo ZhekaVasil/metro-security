@@ -1,0 +1,4 @@
+1. Change file path from - to:
+вопросы.xlsx - __dirname + '/../../../вопросы.xlsx'
+db/answers.json - __dirname + '/../../../db/answers.json'
+db/users.json - __dirname + '/../../../db/users.json'
