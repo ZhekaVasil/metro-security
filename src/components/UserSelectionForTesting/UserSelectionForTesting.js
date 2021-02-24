@@ -7,7 +7,7 @@ import {Button, Form} from 'semantic-ui-react';
 export const UserSelectionForTesting = ({ setPageType, setUserForTesting }) => {
   const onSuggestionSelected = useCallback((event, { suggestionValue }) => {
     setUserForTesting(suggestionValue);
-    setPageType('questions');
+    setPageType('load');
   }, [setUserForTesting, setPageType]);
   return (
     <Container className={classes.container} >

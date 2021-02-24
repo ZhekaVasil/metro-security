@@ -46,6 +46,7 @@ export const Questions = ({ setPageType, questions, setQuestions, userForTesting
             </Button>
           </div>
         </div>
+        <Button className={classes.button} primary size="medium" onClick={() => setPageType('home')}>На главную</Button>
       </Container>
     </div>
   )

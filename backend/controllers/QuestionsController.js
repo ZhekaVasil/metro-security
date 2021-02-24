@@ -7,7 +7,8 @@ const path = require('path');
 exports.questions = [
 	function (req, res) {
 		try {
-			const buf = fs.readFileSync(path.normalize('вопросы.xlsx'));
+			// const buf = fs.readFileSync(path.normalize(__dirname + '/../../../вопросы.xlsx'));
+			const buf = fs.readFileSync(path.normalize('./вопросы.xlsx'));
 			const wb = XLSX.read(buf, {type:'buffer'});
 			return apiResponse.successResponseWithData(res, 'Operation success', parseXLSX(wb))
 		} catch (err) {

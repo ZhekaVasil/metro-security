@@ -8,7 +8,7 @@ export const Home = ({ setPageType }) => {
     <Container className={classes.container}>
       <div className={classes.innerContainer}>
         <Button className={classes.adminButton} primary size="big" onClick={() => setPageType('admin-login')}>Администрирование</Button>
-        <Button primary size="big" onClick={() => setPageType('load')}>Тестирование</Button>
+        <Button primary size="big" onClick={() => setPageType('user-selection-for-testing')}>Тестирование</Button>
       </div>
     </Container>
   )

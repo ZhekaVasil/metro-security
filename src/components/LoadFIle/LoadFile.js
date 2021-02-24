@@ -31,7 +31,7 @@ export const LoadFile = ({setQuestions, setPageType}) => {
       }, []))
       .slice(0, questionsAmount)
     setQuestions(questions);
-    setPageType('user-selection-for-testing');
+    setPageType('questions');
   }, [setQuestions, setPageType, selectedSheets, sheets, questionsAmount])
 
   const maxQuestionsAmount = selectedSheets.reduce((prev, curr) => prev + sheets.data.find(i => i.id === curr).questions.length, 0)
@@ -41,7 +41,7 @@ export const LoadFile = ({setQuestions, setPageType}) => {
       {loading && 'Загрузка...'}
       {sheets && (
         <>
-          <h1>Выбеоите категории вопросов</h1>
+          <h3>Выбеоите категории вопросов</h3>
           {sheets.data.map(sheet => (
             <Form.Field key={sheet.sheetName} className={classes.checkBox}>
               <Checkbox label={sheet.sheetName} name="sheet" checked={selectedSheets.includes(sheet.id)} value={sheet.id} onChange={handleCheckboxChange}/>

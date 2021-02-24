@@ -59,7 +59,7 @@ export const Result = ({ questions, userForTesting, setPageType }) => {
             <Header as="h3" className={classes.description}>Все вопросы отвечены правильно</Header>
           </div>
         )}
-        <Button className={classes.button} primary size="medium" onClick={() => setPageType('home')}>Назад</Button>
+        <Button className={classes.button} primary size="medium" onClick={() => setPageType('home')}>На главную</Button>
       </Container>
     </div>
   )

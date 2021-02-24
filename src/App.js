@@ -7,6 +7,7 @@ import { Home } from './components/Home';
 import { Management } from './components/Management';
 import { Admin } from './components/Admin/Admin';
 import { UserSelectionForTesting } from './components/UserSelectionForTesting';
+import { Header } from './components/Header';
 
 export const App = () => {
   const [pageType, setPageType] = useState('home')
@@ -54,9 +55,12 @@ export const App = () => {
     }
   }
   return (
-    <div className={classes.container}>
-      {page}
-    </div>
+    <>
+      <Header />
+      <div className={classes.container}>
+        {page}
+      </div>
+    </>
   )
 };
 
