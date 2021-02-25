@@ -51,10 +51,9 @@ const parseXLSX = xlsx => {
 				return prev;
 			}
 		}, []);
-
 		return {
-			sheetName,
-			id: generateHash(sheetName),
+			sheetName: sheetData.A1.v,
+			id: generateHash(sheetData.A1.v),
 			questions: Object.values(Object.entries(sheetData).reduce((prev, [cellName, cellData]) => {
 				if (cellName.includes('!')) {
 					return prev;
@@ -62,7 +61,7 @@ const parseXLSX = xlsx => {
           const questionRow = Number(cellName.replace(/\D+/, ''));
           const questionColumn = cellName.replace(/\d+/, '');
           const isQuestion = questionColumn === 'A';
-          if (questionRow === 1) {
+          if (questionRow <= 2) {
 						return prev
 					} else {
 						prev[questionRow] = prev[questionRow] || {};
