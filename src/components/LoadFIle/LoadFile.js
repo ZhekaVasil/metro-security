@@ -4,8 +4,9 @@ import classes from './LoadFile.module.scss';
 import {shuffle} from '../../utils';
 import {getApiUrl} from '../../utils/apiUtils';
 import {Form, Checkbox, Input, Button} from 'semantic-ui-react';
+import {UserInfoHeading} from '../UserInfoHeading';
 
-export const LoadFile = ({setQuestions, setPageType}) => {
+export const LoadFile = ({setQuestions, setPageType, userForTesting}) => {
   const {loading, error, data: sheets} = useFetch(getApiUrl('questions'), {cachePolicy: 'no-cache'}, []);
   const [questionsAmount, setQuestionsAmount] = useState(10);
   const [selectedSheets, setSelectedSheets] = useState([]);
@@ -37,11 +38,12 @@ export const LoadFile = ({setQuestions, setPageType}) => {
   const maxQuestionsAmount = selectedSheets.reduce((prev, curr) => prev + sheets.data.find(i => i.id === curr).questions.length, 0)
   return (
     <div className={classes.container}>
+      <UserInfoHeading  user={userForTesting}/>
       {error && 'Упс... Произошла ошибка. Невозможно загрузить список вопросов'}
       {loading && 'Загрузка...'}
       {sheets && (
         <>
-          <h3>Выбеоите категории вопросов</h3>
+          <h4>Выбеоите категории вопросов</h4>
           {sheets.data.map(sheet => (
             <Form.Field key={sheet.sheetName} className={classes.checkBox}>
               <Checkbox label={sheet.sheetName} name="sheet" checked={selectedSheets.includes(sheet.id)} value={sheet.id} onChange={handleCheckboxChange}/>

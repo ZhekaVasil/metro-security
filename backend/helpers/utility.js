@@ -87,24 +87,26 @@ const parseXLSX = xlsx => {
 }
 
 const parseXLSXUsers = xlsx => {
-	return Object.entries(xlsx.Sheets).map(([sheetName, sheetData]) => {
+	const data = Object.entries(xlsx.Sheets).map(([sheetName, sheetData]) => {
 		return Object.values(Object.entries(sheetData).reduce((prev, [cellName, cellData]) => {
 			if (cellName.includes('!')) {
 				return prev;
 			} else {
 				const userRow = Number(cellName.replace(/\D+/, ''));
 				const userColumn = cellName.replace(/\d+/, '');
-				const isName = userColumn === 'A';
-				if (userRow === 1) {
+				const isName = userColumn === 'B';
+				const isPosition = userColumn === 'F';
+				if (userRow <= 3) {
 					return prev
 				} else {
 					prev[userRow] = prev[userRow] || {};
 
 					if (isName) {
-						prev[userRow].fullName = cellData.v;
-						prev[userRow].id = generateHash(cellData.v.toString());
-					} else {
-						prev[userRow].position = cellData.v;
+						const fullName = typeof cellData.v === 'string' ? cellData.v.toString().trim() : cellData.v;
+						prev[userRow].fullName = fullName;
+						prev[userRow].id = generateHash(fullName);
+					} else if (isPosition) {
+						prev[userRow].position = typeof cellData.v === 'string' ? cellData.v.trim() : cellData.v;
 					}
 
 					return prev;
@@ -112,6 +114,7 @@ const parseXLSXUsers = xlsx => {
 			}
 		}, {}))
 	}).flat();
+	return data.filter(i => i.fullName && typeof i.fullName === 'string');
 }
 
 

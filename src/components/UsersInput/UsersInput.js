@@ -12,14 +12,14 @@ export const UsersInput = ({ onSuggestionSelected }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [value, setValue] = useState('');
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (users) {
       setSuggestions(users.data);
     }
-  }, [users])
+  }, [users])*/
 
   const onSuggestionsFetchRequested = useCallback(({ value }) => {
-    if (value && value.length) {
+    if (value && value.length > 2) {
       const filteredSuggestions = users.data.filter(user => user.fullName.toLowerCase().includes(value.trim().toLowerCase()));
       setSuggestions(filteredSuggestions);
     }

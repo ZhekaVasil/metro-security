@@ -1,1 +1,1 @@
-export const ADMIN_PASS = '123';
+export const ADMIN_PASS = '1968';

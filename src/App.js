@@ -31,7 +31,7 @@ export const App = () => {
     }
 
     case 'load': {
-      page = <LoadFile setQuestions={setQuestions} setPageType={setPageType} />;
+      page = <LoadFile setQuestions={setQuestions} setPageType={setPageType} userForTesting={userForTesting} />;
       break;
     }
 
