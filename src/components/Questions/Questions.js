@@ -27,7 +27,7 @@ export const Questions = ({ setPageType, questions, setQuestions, userForTesting
   }, [isLastQuestion, setPageType, currentQuestionId, setCurrentQuestionId, questions]);
   return (
     <div className={classes.container}>
-      <UserInfoHeading  user={userForTesting}/>
+      <UserInfoHeading user={userForTesting}/>
       <Container className={classes.containerInner}>
         <Question questionId={currentQuestionId} setQuestions={setQuestions} questions={questions} className={classes.question} />
         <div className={classes.buttons}>
