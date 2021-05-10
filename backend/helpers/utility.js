@@ -61,6 +61,7 @@ const parseXLSX = xlsx => {
           const questionRow = Number(cellName.replace(/\D+/, ''));
           const questionColumn = cellName.replace(/\d+/, '');
           const isQuestion = questionColumn === 'A';
+          const isPosition = questionColumn === 'V';
           if (questionRow <= 2) {
 						return prev
 					} else {
@@ -69,6 +70,8 @@ const parseXLSX = xlsx => {
 						if (isQuestion) {
 							prev[questionRow].question = cellData.v;
 							prev[questionRow].id = generateHash(cellData.v.toString());
+						} else if (isPosition) {
+							prev[questionRow].position = cellData.v || '';
 						} else {
 							prev[questionRow].answers = shuffle([...prev[questionRow].answers || [], {
 								id: generateHash(cellData.v.toString()),

@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import useFetch from 'use-http';
 import classes from './LoadFile.module.scss';
 import {shuffle} from '../../utils';
@@ -10,6 +10,22 @@ export const LoadFile = ({setQuestions, setPageType, userForTesting}) => {
   const {loading, error, data: sheets} = useFetch(getApiUrl('questions'), {cachePolicy: 'no-cache'}, []);
   const [questionsAmount, setQuestionsAmount] = useState(10);
   const [selectedSheets, setSelectedSheets] = useState([]);
+  const [filteredSheets, setFilteredSheets] = useState(null);
+
+  useEffect(() => {
+    if (sheets) {
+      const position = (userForTesting.position || '').trim().toLowerCase();
+      const filteredData = sheets.data.reduce((prev, curr) => {
+        const filteredQuestions = curr.questions.filter(question => (question.position || '').trim().toLowerCase() === position);
+        if (filteredQuestions.length) {
+          return [...prev, {...curr, questions: filteredQuestions} ]
+        } else {
+          return prev;
+        }
+      }, []);
+      setFilteredSheets({data: filteredData});
+    }
+  }, [sheets, userForTesting]);
 
   const handleCheckboxChange = useCallback((event, { value, checked }) => {
     if (checked) {
@@ -24,7 +40,7 @@ export const LoadFile = ({setQuestions, setPageType, userForTesting}) => {
   }, [setQuestionsAmount])
 
   const goNext = useCallback(() => {
-    const questions = shuffle(sheets.data
+    const questions = shuffle(filteredSheets.data
       .filter(i => selectedSheets.includes(i.id))
       .reduce((prev, curr) => {
         const questions = curr.questions.map(i => ({...i, answeredIds: []}));
@@ -33,18 +49,18 @@ export const LoadFile = ({setQuestions, setPageType, userForTesting}) => {
       .slice(0, questionsAmount)
     setQuestions(questions);
     setPageType('questions');
-  }, [setQuestions, setPageType, selectedSheets, sheets, questionsAmount])
+  }, [setQuestions, setPageType, selectedSheets, filteredSheets, questionsAmount])
 
-  const maxQuestionsAmount = selectedSheets.reduce((prev, curr) => prev + sheets.data.find(i => i.id === curr).questions.length, 0)
+  const maxQuestionsAmount = selectedSheets.reduce((prev, curr) => prev + filteredSheets.data.find(i => i.id === curr).questions.length, 0)
   return (
     <div className={classes.container}>
       <UserInfoHeading  user={userForTesting}/>
       {error && 'Упс... Произошла ошибка. Невозможно загрузить список вопросов'}
       {loading && 'Загрузка...'}
-      {sheets && (
+      {filteredSheets && (
         <>
           <h4>Выбеоите категории вопросов</h4>
-          {sheets.data.map(sheet => (
+          {filteredSheets.data.map(sheet => (
             <Form.Field key={sheet.sheetName} className={classes.checkBox}>
               <Checkbox label={sheet.sheetName} name="sheet" checked={selectedSheets.includes(sheet.id)} value={sheet.id} onChange={handleCheckboxChange}/>
             </Form.Field>

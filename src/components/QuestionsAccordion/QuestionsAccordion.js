@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import cx from 'classnames';
 import classes from './QuestionsAccordion.module.scss'
 import {Accordion, Checkbox, Form, Icon} from 'semantic-ui-react';
+import Parser from 'html-react-parser';
 
 export const QuestionsAccordion = ({ answers }) => {
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -29,7 +30,7 @@ export const QuestionsAccordion = ({ answers }) => {
               <Form>
                 {answers.map(({ id, answer, checked, isCorrect }) => (
                   <Form.Field key={id}>
-                    <Checkbox label={answer} name="radioGroup" checked={checked} readOnly className={cx({
+                    <Checkbox label={Parser(answer)} name="radioGroup" checked={checked} readOnly className={cx({
                       [classes.correctAnswer]: isCorrect,
                       [classes.incorrectAnswer]: !isCorrect
                     })} />

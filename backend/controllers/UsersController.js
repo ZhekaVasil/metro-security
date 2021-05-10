@@ -7,8 +7,8 @@ const path = require('path');
 exports.usersList = [
 	function (req, res) {
 		try {
-			const buf = fs.readFileSync(path.normalize(__dirname + '/../../../Работники.xls'));
-			// const buf = fs.readFileSync(path.normalize('./Работники.xls'));
+			// const buf = fs.readFileSync(path.normalize(__dirname + '/../../../Работники.xls'));
+			const buf = fs.readFileSync(path.normalize('./Работники.xls'));
 			const wb = XLSX.read(buf, {type:'buffer'});
 			return apiResponse.successResponseWithData(res, 'Operation success', parseXLSXUsers(wb))
 		} catch (err) {

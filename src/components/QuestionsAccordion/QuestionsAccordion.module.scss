@@ -16,4 +16,10 @@
       color: green!important;
     }
   }
+
+  & :global img {
+    display: block;
+    width: 50%!important;
+    margin: 1rem auto!important;
+  }
 }
