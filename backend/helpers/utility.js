@@ -71,7 +71,7 @@ const parseXLSX = xlsx => {
 							prev[questionRow].question = cellData.v;
 							prev[questionRow].id = generateHash(cellData.v.toString());
 						} else if (isPosition) {
-							prev[questionRow].position = cellData.v || '';
+							prev[questionRow].positions = (cellData.v || '').split(',').map(i => i.toLowerCase().trim());
 						} else {
 							prev[questionRow].answers = shuffle([...prev[questionRow].answers || [], {
 								id: generateHash(cellData.v.toString()),

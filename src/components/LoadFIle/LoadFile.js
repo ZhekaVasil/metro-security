@@ -16,7 +16,7 @@ export const LoadFile = ({setQuestions, setPageType, userForTesting}) => {
     if (sheets) {
       const position = (userForTesting.position || '').trim().toLowerCase();
       const filteredData = sheets.data.reduce((prev, curr) => {
-        const filteredQuestions = curr.questions.filter(question => (question.position || '').trim().toLowerCase() === position);
+        const filteredQuestions = curr.questions.filter(question => (question.positions || []).includes(position));
         if (filteredQuestions.length) {
           return [...prev, {...curr, questions: filteredQuestions} ]
         } else {

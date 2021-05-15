@@ -2,8 +2,8 @@ const express = require("express");
 const path = require('path');
 
 const router = express.Router();
-// const IMAGES_PATH = path.normalize(__dirname + '/../../../images/');
-const IMAGES_PATH = path.normalize(__dirname + '/../../public/images/');
+const IMAGES_PATH = path.normalize(__dirname + '/../../../images/');
+// const IMAGES_PATH = path.normalize(__dirname + '/../../public/images/');
 
 router.get("/:image", (req, res) => {
   try {

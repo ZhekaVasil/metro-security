@@ -3,5 +3,5 @@
 db/answers.json - __dirname + '/../../../db/answers.json'
 работники.xlsx - __dirname + '/../../../работники.xlsx'
 
-npm build
+npm run build
 electron-forge make --platform=win32 --arch=ia32
