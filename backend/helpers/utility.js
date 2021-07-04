@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 const generateHash = string => {
 	let hash = 0,
 		i,
@@ -53,7 +55,7 @@ const parseXLSX = xlsx => {
 		}, []);
 		return {
 			sheetName: sheetData.A1.v,
-			id: generateHash(sheetData.A1.v),
+			id: uuidv4(),
 			questions: Object.values(Object.entries(sheetData).reduce((prev, [cellName, cellData]) => {
 				if (cellName.includes('!')) {
 					return prev;
@@ -69,12 +71,12 @@ const parseXLSX = xlsx => {
 
 						if (isQuestion) {
 							prev[questionRow].question = cellData.v;
-							prev[questionRow].id = generateHash(cellData.v.toString());
+							prev[questionRow].id = uuidv4();
 						} else if (isPosition) {
 							prev[questionRow].positions = (cellData.v || '').split(',').map(i => i.toLowerCase().trim());
 						} else {
 							prev[questionRow].answers = shuffle([...prev[questionRow].answers || [], {
-								id: generateHash(cellData.v.toString()),
+								id: uuidv4(),
 								answer: cellData.v,
 								isCorrect: correctColumns.includes(questionColumn),
 							}])

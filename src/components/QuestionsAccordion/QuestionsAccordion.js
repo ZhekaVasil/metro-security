@@ -24,7 +24,7 @@ export const QuestionsAccordion = ({ answers }) => {
               onClick={handleClick}
             >
               <Icon name='dropdown' />
-              {question}
+              {Parser(question)}
             </Accordion.Title>
             <Accordion.Content active={activeIndex === index}>
               <Form>

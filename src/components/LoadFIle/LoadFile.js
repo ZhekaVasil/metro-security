@@ -48,6 +48,7 @@ export const LoadFile = ({setQuestions, setPageType, userForTesting}) => {
       }, []))
       .slice(0, questionsAmount)
     setQuestions(questions);
+    console.log(questions);
     setPageType('questions');
   }, [setQuestions, setPageType, selectedSheets, filteredSheets, questionsAmount])
 

@@ -7,11 +7,14 @@ const apiRouter = require("./routes/api");
 const imageRouter = require("./routes/image");
 const apiResponse = require("./helpers/apiResponse");
 const cors = require("cors");
+const bodyParser = require('body-parser');
 
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+/*app.use(express.json());
+app.use(express.urlencoded({ extended: false }));*/
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../build")));
 
